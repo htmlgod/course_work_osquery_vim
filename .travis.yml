@@ -1,0 +1,13 @@
+os: linux
+sudo: required
+language:
+    - minimal
+
+jobs:
+    include:
+    - name: "build"
+      script:
+        - cmake -H. -B_build 
+        - cmake --build _build
+notifications:
+    email: false
