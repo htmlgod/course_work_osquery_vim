@@ -1,6 +1,0 @@
-#!/bin/bash
-echo "Installed plugins:"
-grep "Plug" ${HOME}/.vimrc |grep -c "[\'].*[\']"
-grep "Plug" ${HOME}/.vimrc | grep -sEo "[\'].*[\']"
-#grep  Plugin ${HOME}/.vimrc | grep -Eo '["\047].*["\047]'
-#ls ${HOME}/.vim/bundle

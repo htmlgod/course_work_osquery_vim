@@ -1,5 +1,4 @@
-#include <tools.h>
-#include <crawler.h>
+#include <shell.h>
 
 #define PLUGINSLIST 1
 #define PLUGINSETTINGS 2
@@ -51,26 +50,22 @@ int prompt() {
 		std::cin >> command;
 		switch (command) {
 			case PLUGINSLIST:
-				getListOfPlugins();
 				break;
 			case PLUGINSETTINGS:
-				getListOfSettingForPlugins();
 				break;
 			case SETTINGSLIST:
-				getListOfSettings();
 				break;
 			case MODELIST:
-				getListOfModes();
 				break;
 			case RUNTIME:
-				getRunTime();
 				break;
 			case PLUGINSTARS: {
 				std::string name;
 				std::cout << "Enter plugin name: ";
 				std::cin.ignore();
 				getline(std::cin,name);
-				std::cout << name << " has " << getStarsForPlugin(name)
+				Plugin plug(name);
+				std::cout << name << " has " << plug.getPluginStarCount()
 				<< " stars on Github" << std::endl;
 				break;
 			}
@@ -79,7 +74,7 @@ int prompt() {
 				std::cout << "Enter plugin name: ";
 				std::cin.ignore();
 				getline(std::cin,name);
-				std::cout << name << " has " << getClassifyForPlugin(name)
+				std::cout << name << " has "
 				<< " category on vim-awesome" << std::endl;
 				break;
 			}
@@ -89,11 +84,10 @@ int prompt() {
 				std::cin.ignore();
 				getline(std::cin, name);
 				std::cout << name << " has "
-				<< getIssuesAmountForPlugin(name) << " amount of opened/closed issues on Github" << std::endl;
+				<< " amount of opened/closed issues on Github" << std::endl;
 				break;
 			}
 			case GROUPSTARS:
-				getGroupStarsAmount();
 				break;
 			case EXIT:
 				break;

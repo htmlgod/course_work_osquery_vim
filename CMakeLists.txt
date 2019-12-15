@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 3.9)
-
+cmake_minimum_required(VERSION 3.9) 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -11,22 +10,31 @@ HunterGate(
 )
 project(viminfo)
 
+hunter_add_package(CURL)
+find_package(CURL CONFIG REQUIRED)
+
+hunter_add_package(nlohmann_json)
+find_package(nlohmann_json CONFIG REQUIRED)
+
+add_library(shell STATIC
+	${CMAKE_CURRENT_SOURCE_DIR}/source/shell.cpp
+)
+add_library(pluginfo STATIC
+	${CMAKE_CURRENT_SOURCE_DIR}/source/pluginfo.cpp
+)
+
+target_include_directories(pluginfo
+	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_include_directories(shell
+	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
 add_executable(viminfo source/main.cpp)
-add_library(tools STATIC
-	${CMAKE_CURRENT_SOURCE_DIR}/source/tools.cpp
-)
-add_library(crawler STATIC
-	${CMAKE_CURRENT_SOURCE_DIR}/source/crawler.cpp
-)
 target_include_directories(viminfo
 	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
-target_include_directories(crawler
-	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+target_link_libraries(pluginfo PUBLIC nlohmann_json::nlohmann_json)
+target_link_libraries(
+	viminfo PUBLIC shell pluginfo CURL::libcurl
 )
-target_include_directories(tools
-	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
-target_link_libraries(viminfo tools crawler)
 
