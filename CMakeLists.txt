@@ -22,11 +22,16 @@ add_library(shell STATIC
 add_library(pluginfo STATIC
 	${CMAKE_CURRENT_SOURCE_DIR}/source/pluginfo.cpp
 )
-
+add_library(webutils STATIC
+	${CMAKE_CURRENT_SOURCE_DIR}/source/webutils.cpp
+)
 target_include_directories(pluginfo
 	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 target_include_directories(shell
+	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_include_directories(webutils
 	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 add_executable(viminfo source/main.cpp)
@@ -34,7 +39,8 @@ target_include_directories(viminfo
 	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 target_link_libraries(pluginfo PUBLIC nlohmann_json::nlohmann_json)
+target_link_libraries(webutils PRIVATE CURL::libcurl)
 target_link_libraries(
-	viminfo PUBLIC shell pluginfo CURL::libcurl
+	viminfo PUBLIC shell pluginfo webutils 
 )
 

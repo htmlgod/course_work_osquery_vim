@@ -1,55 +1,54 @@
+#include <nlohmann/json.hpp>
 #include <pluginfo.h>
 
-#include <nlohmann/json.hpp>
-namespace {
-std::size_t callback(
-	const char* in,
-	std::size_t size,
-	std::size_t num,
-	std::string* out
-	) {
-	const std::size_t totalBytes(size * num);
-	out->append(in, totalBytes);
-	return totalBytes;						    
-}
-}
-
-int Plugin::getPluginStarCount() {
-    const std::string url = "https://api.github.com/repos/"
+const int Plugin::getStarsCount() {
+    const std::string url = API::GITHUB_API_ENTRY + "repos/"
 	+ _pluginName;
 
-	CURL* curl = curl_easy_init();
-
-	curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-
-	curl_easy_setopt(curl, CURLOPT_USERAGENT, "curl/7.64.1");
-
-	curl_easy_setopt(curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-
-	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 10);
-
-	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-
-	long httpCode(0);
-
-	std::string* httpData = new std::string();
-
-	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, callback);
-
-	curl_easy_setopt(curl, CURLOPT_WRITEDATA, httpData);
-
-	curl_easy_perform(curl);
-	curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpCode);
-	curl_easy_cleanup(curl);
-	
-	if (httpCode == 200) {
-		auto json = nlohmann::json::parse(*httpData);
+	std::string jsonHTTP = httpQuery(url);
+	if (jsonHTTP != "empty") {
+		auto json = nlohmann::json::parse(jsonHTTP);
 		return json["stargazers_count"].get<int>();
 	}
-	else {
-		std::cout << "Could not parse HTTP data as JSON" << std::endl;
-		std::cout << "HTTP data was:\n" << *httpData << std::endl;
-		return 1;
+	return 0;
+}
+const int Plugin::getOpenedIssues() {
+	const std::string search_query = "+type:issue+state:open";
+	const std::string url = 
+	API::GITHUB_API_ENTRY + "search/issues?q=repo:" + _pluginName + search_query;
+
+	std::string jsonHTTP = httpQuery(url);
+	if (jsonHTTP != "empty") {
+		auto json = nlohmann::json::parse(jsonHTTP);
+		return json["total_count"].get<int>();
 	}
-	return -1;
+	return 0;
+}
+
+const int Plugin::getClosedIssues() {
+	const std::string search_query = "+type:issue+state:closed";
+	const std::string url = 
+	API::GITHUB_API_ENTRY + "search/issues?q=repo:" + _pluginName + search_query;
+
+	std::string jsonHTTP = httpQuery(url);
+	if (jsonHTTP != "empty") {
+		auto json = nlohmann::json::parse(jsonHTTP);
+		return json["total_count"].get<int>();
+	}
+	return 0;
+}
+
+const double Plugin::getAmountOfOpenedIssuesToClosed() {
+	return getOpenedIssues()/getClosedIssues();
+}
+
+void printGroup(std::vector<Plugin>& group) {
+	for(int i = 0; i < group.size(); i++) {
+		std::cout << group[i]._pluginName << " ";
+	}
+	std::cout << std::endl;
+}
+
+int Plugin::countForGroupOfPluginAmountOfStars(std::vector<Plugin> &list) {
+    return 0;
 }

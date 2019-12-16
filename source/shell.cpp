@@ -28,13 +28,13 @@ __      _______ __  __      _____ _   _ ______ ____
 void printMenu() {
 	std::cout << R"(
 **************************************************************************
-1. Get list of plugins
-2. Get list of plugins settings
-3. Get list of setting
-4. Get list of ????????
-5. Get VIM runtime
+1. WIP
+2. WIP
+3. WIP
+4. WIP
+5. WIP
 6. Get amount of stars of plugin on Github
-7. Get plugin's category on vim-awesome
+7. WIP
 8. Get amount of open issues to closed issues on Github for plugin
 9. Count amount for group of plugins stars to amount of plugins
 0. Exit from vim-info
@@ -65,17 +65,18 @@ int prompt() {
 				std::cin.ignore();
 				getline(std::cin,name);
 				Plugin plug(name);
-				std::cout << name << " has " << plug.getPluginStarCount()
+				std::cout << name << " has " << plug.getStarsCount()
 				<< " stars on Github" << std::endl;
 				break;
 			}
 			case PLUGINCLASS: {
-				std::string name;
+				/*std::string name;
 				std::cout << "Enter plugin name: ";
 				std::cin.ignore();
 				getline(std::cin,name);
 				std::cout << name << " has "
 				<< " category on vim-awesome" << std::endl;
+				*/
 				break;
 			}
 			case PLUGINSISSUES: {
@@ -83,12 +84,28 @@ int prompt() {
 				std::cout << "Enter plugin name: ";
 				std::cin.ignore();
 				getline(std::cin, name);
-				std::cout << name << " has "
-				<< " amount of opened/closed issues on Github" << std::endl;
+				Plugin plug(name);
+				std::cout << name << " has " << plug.getOpenedIssues() 
+				<< " amount of opened issues," << std::endl <<
+				plug.getClosedIssues() << " amount of closed issues, "
+				<< std:: endl << plug.getAmountOfOpenedIssuesToClosed()
+				<< " amount of opened/closed issues" << std::endl;
 				break;
 			}
-			case GROUPSTARS:
+			case GROUPSTARS: {
+				std::vector<Plugin> group;
+				std::cout << "Enter group of plugins(EOG means stop)"
+					<< std::endl;
+                std::string name;
+                name = nullptr;
+				while (name != "EOG") {
+					getline(std::cin, name);
+					Plugin plug(name);
+					group.push_back(plug);
+				}
+				printGroup(group);	
 				break;
+			}
 			case EXIT:
 				break;
 			default:
