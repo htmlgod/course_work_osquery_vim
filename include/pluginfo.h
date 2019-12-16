@@ -12,18 +12,18 @@
 class Plugin {
 public:
 	explicit Plugin(std::string name) : _pluginName(std::move(name)) {}
-	
-	const int getStarsCount();
+	Plugin();
+	int getStarsCount();
 
-	const int getOpenedIssues();
+	int getOpenedIssues();
 
-	const int getClosedIssues();
+	int getClosedIssues();
 
-	const double getAmountOfOpenedIssuesToClosed();
+	double getAmountOfOpenedIssuesToClosed();
 
-	std::string getVimAwesomePluginClassification();
+	//std::string getVimAwesomePluginClassification();
 
-	int countForGroupOfPluginAmountOfStars(std::vector<Plugin>& list);
+	double countForGroupOfPluginAmountOfStars(std::vector<Plugin>& list);
 	
 	friend void printGroup(std::vector<Plugin>& group);
 private:

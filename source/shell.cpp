@@ -94,16 +94,20 @@ int prompt() {
 			}
 			case GROUPSTARS: {
 				std::vector<Plugin> group;
-				std::cout << "Enter group of plugins(EOG means stop)"
-					<< std::endl;
+				int groupSize;
+                std::cout << "Enter size of group: "; std::cin >> groupSize;
+                group.reserve(groupSize);
+				std::cout << "Enter group of plugins" << std::endl;
+                std::cin.ignore();
                 std::string name;
-                name = nullptr;
-				while (name != "EOG") {
+				for (int i = 0; i < groupSize; i++) {
 					getline(std::cin, name);
-					Plugin plug(name);
-					group.push_back(plug);
+					group.emplace_back(name);
 				}
-				printGroup(group);	
+				printGroup(group);
+				Plugin plug;
+                std::cout << "Group amount of stars/number is "<< plug.countForGroupOfPluginAmountOfStars(group)
+                << std::endl;
 				break;
 			}
 			case EXIT:

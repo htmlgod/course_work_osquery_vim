@@ -1,7 +1,11 @@
 #include <nlohmann/json.hpp>
 #include <pluginfo.h>
 
-const int Plugin::getStarsCount() {
+Plugin::Plugin() {
+    _pluginName = "none";
+}
+
+int Plugin::getStarsCount() {
     const std::string url = API::GITHUB_API_ENTRY + "repos/"
 	+ _pluginName;
 
@@ -12,7 +16,7 @@ const int Plugin::getStarsCount() {
 	}
 	return 0;
 }
-const int Plugin::getOpenedIssues() {
+int Plugin::getOpenedIssues() {
 	const std::string search_query = "+type:issue+state:open";
 	const std::string url = 
 	API::GITHUB_API_ENTRY + "search/issues?q=repo:" + _pluginName + search_query;
@@ -25,7 +29,7 @@ const int Plugin::getOpenedIssues() {
 	return 0;
 }
 
-const int Plugin::getClosedIssues() {
+int Plugin::getClosedIssues() {
 	const std::string search_query = "+type:issue+state:closed";
 	const std::string url = 
 	API::GITHUB_API_ENTRY + "search/issues?q=repo:" + _pluginName + search_query;
@@ -38,17 +42,21 @@ const int Plugin::getClosedIssues() {
 	return 0;
 }
 
-const double Plugin::getAmountOfOpenedIssuesToClosed() {
-	return getOpenedIssues()/getClosedIssues();
+double Plugin::getAmountOfOpenedIssuesToClosed() {
+	return double(getOpenedIssues())/double(getClosedIssues());
 }
 
 void printGroup(std::vector<Plugin>& group) {
-	for(int i = 0; i < group.size(); i++) {
-		std::cout << group[i]._pluginName << " ";
+	for(const auto& plug : group) {
+		std::cout << plug._pluginName << std::endl;
 	}
 	std::cout << std::endl;
 }
 
-int Plugin::countForGroupOfPluginAmountOfStars(std::vector<Plugin> &list) {
-    return 0;
+double Plugin::countForGroupOfPluginAmountOfStars(std::vector<Plugin>& group) {
+    int starsSum = 0;
+    for(Plugin plug : group) {
+         starsSum += plug.getStarsCount();
+    }
+    return double(starsSum)/double(group.size());
 }
