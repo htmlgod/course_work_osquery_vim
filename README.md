@@ -44,7 +44,7 @@ $ cmake --build _build
 ![vim-info-build](docs/demos/build.gif)
 ## Процесс запуска тестов
 
-блаблабла
+**WORK IN PROGRESS** 
 
 ## Примеры команд
 
@@ -69,11 +69,16 @@ $ cmake --build _build
 
 ## Архитектура проекта
 
-ссылка на файл
+[Structure.md](https://gist.github.com/KhmelevskayaYu/37e1c584a141c59493925574316b792d)
 
 ## Полезные ссылки
 
-ссылки
+* [Gathered information](https://gist.github.com/htmlgod/e33c7b334f91992d800dd2ce151b3648)
+* [GitHub API](https://developer.github.com/v3/)
+* [libcurl documentation](https://curl.haxx.se/libcurl/c/libcurl-tutorial.html)
+* [nlohmann/json](https://github.com/nlohmann/json)
+* [vimdoc](http://vimdoc.sourceforge.net/htmldoc/starting.html)
+* [vim wiki](https://vim.fandom.com/wiki/Displaying_the_current_Vim_environment)
 
 ## TODO-лист
 
@@ -95,3 +100,5 @@ $ cmake --build _build
 16. [ ] Провести рефакторинг кода
 17. [ ] Выполнить соблюдения одного стиля кода для всего проекта
 18. [ ] Добавить `Clang-code style`
+19. [x] Собрать необходимую информацию
+20. [x] Написать shell-скрипты
