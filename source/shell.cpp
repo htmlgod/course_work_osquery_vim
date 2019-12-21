@@ -34,7 +34,7 @@ void printMenu() {
 4. WIP
 5. WIP
 6. Get amount of stars of plugin on Github
-7. WIP
+7. Get VimAwesome classification of plugin
 8. Get amount of open issues to closed issues on Github for plugin
 9. Count amount for group of plugins stars to amount of plugins
 0. Exit from vim-info
@@ -70,13 +70,14 @@ int prompt() {
 				break;
 			}
 			case PLUGINCLASS: {
-				/*std::string name;
+				std::string name;
 				std::cout << "Enter plugin name: ";
 				std::cin.ignore();
 				getline(std::cin,name);
+				Plugin plug(name);
 				std::cout << name << " has "
-				<< " category on vim-awesome" << std::endl;
-				*/
+				<< " category on vim-awesome: "<<plug.getVimAwesomePluginClassification() << std::endl;
+				
 				break;
 			}
 			case PLUGINSISSUES: {

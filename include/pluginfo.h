@@ -21,7 +21,9 @@ public:
 
 	double getAmountOfOpenedIssuesToClosed();
 
-	//std::string getVimAwesomePluginClassification();
+	std::string getVimAwesomePluginClassification();
+
+	std::string getFormattedPluginName();
 
 	double countForGroupOfPluginAmountOfStars(std::vector<Plugin>& list);
 	

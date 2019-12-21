@@ -16,6 +16,9 @@ find_package(CURL CONFIG REQUIRED)
 hunter_add_package(nlohmann_json)
 find_package(nlohmann_json CONFIG REQUIRED)
 
+#hunter_add_package(Boost COMPONENTS system filesystem)
+#find_package(Boost CONFIG REQUIRED system filesystem program_options)
+
 add_library(shell STATIC
 	${CMAKE_CURRENT_SOURCE_DIR}/source/shell.cpp
 )
