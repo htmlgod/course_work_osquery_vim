@@ -22,13 +22,13 @@ find_package(nlohmann_json CONFIG REQUIRED)
 add_library(shell STATIC
 	${CMAKE_CURRENT_SOURCE_DIR}/source/shell.cpp
 )
-add_library(pluginfo STATIC
-	${CMAKE_CURRENT_SOURCE_DIR}/source/pluginfo.cpp
+add_library(plugin STATIC
+	${CMAKE_CURRENT_SOURCE_DIR}/source/plugin.cpp
 )
 add_library(webutils STATIC
 	${CMAKE_CURRENT_SOURCE_DIR}/source/webutils.cpp
 )
-target_include_directories(pluginfo
+target_include_directories(plugin
 	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 target_include_directories(shell
@@ -41,9 +41,9 @@ add_executable(viminfo source/main.cpp)
 target_include_directories(viminfo
 	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
-target_link_libraries(pluginfo PUBLIC nlohmann_json::nlohmann_json)
+target_link_libraries(plugin PUBLIC nlohmann_json::nlohmann_json)
 target_link_libraries(webutils PRIVATE CURL::libcurl)
 target_link_libraries(
-	viminfo PUBLIC shell pluginfo webutils 
+	viminfo PUBLIC shell plugin webutils 
 )
 

@@ -28,7 +28,7 @@ __      _______ __  __      _____ _   _ ______ ____
 void printMenu() {
 	std::cout << R"(
 **************************************************************************
-1. WIP
+1. Get list of plugins
 2. WIP
 3. WIP
 4. WIP
@@ -49,8 +49,11 @@ int prompt() {
 		std::cout << "> ";
 		std::cin >> command;
 		switch (command) {
-			case PLUGINSLIST:
+			case PLUGINSLIST: {
+
 				break;
+			}
+				
 			case PLUGINSETTINGS:
 				break;
 			case SETTINGSLIST:

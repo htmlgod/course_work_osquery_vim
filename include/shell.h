@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include <pluginfo.h>
+#include <plugin.h>
 
 void start();
 
