@@ -35,6 +35,8 @@ public:
 	double getStartupTimeMS();
     double getStartupTimeS();
 
+    void exportJSONData();
+
 	void init();
 private:
     VimConfig() = default;
