@@ -12,6 +12,9 @@ class VimConfig {
 
 public:
     VimConfig(VimConfig const&) = delete;
+
+    VimConfig(const std::vector<std::string> &settings);
+
     VimConfig& operator= (VimConfig const&) = delete;
 
 	static VimConfig& Instance() {
@@ -28,16 +31,17 @@ public:
 	void detectPluginManager();
 	void detectVimConfigFile();
 	
-	//double getStartupTimeinMS();
-	//double getStartupTimeinSec();
-	
+	void getStartupTime();
+	double getStartupTimeMS();
+    double getStartupTimeS();
+
 	void init();
 private:
     VimConfig() = default;
-	std::vector<Plugin> 	 _plugins;
-	std::string              _manager;
-	std::string              _configFilePath;
-	std::vector<std::string> _settings;
-	//std::vector<std::string> _modes;
-	//double						 _startupTime;
+	std::vector<Plugin> 	    _plugins;
+	std::string                 _manager;
+	std::string                 _configFilePath;
+	std::vector<std::string>    _settings;
+	//std::vector<std::string>  _modes;
+	double	_startupTime;
 };
