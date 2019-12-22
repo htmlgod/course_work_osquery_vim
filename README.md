@@ -104,3 +104,4 @@ $ cmake --build _build
 17. [ ] Добавить `Clang-code style`
 18. [x] Собрать необходимую информацию
 19. [x] Написать shell-скрипты
+20. [ ] Проверки на ввод/вывод/Unexpected Behavior
