@@ -6,7 +6,7 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/process.hpp>
-
+#include <plugin.h>
 
 class VimConfig {
 
@@ -19,15 +19,25 @@ public:
 		return vimconfig;
 	}
 
-	double getStartupTimeinMS();
+    void getPluginList();
+	void parsePluginList();
 
-	double getStartupTimeinSec();
+    void getSettingList();
+    void parseSettingList();
 
+	void detectPluginManager();
+	void detectVimConfigFile();
+	
+	//double getStartupTimeinMS();
+	//double getStartupTimeinSec();
+	
 	void init();
 private:
     VimConfig() = default;
-	//std::vector<Plugin> 	 _plugins;
-	//std::vector<std::string> _settings;
+	std::vector<Plugin> 	 _plugins;
+	std::string              _manager;
+	std::string              _configFilePath;
+	std::vector<std::string> _settings;
 	//std::vector<std::string> _modes;
-	double						 _startupTime;
+	//double						 _startupTime;
 };
