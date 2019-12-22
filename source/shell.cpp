@@ -62,7 +62,9 @@ int prompt() {
 			case MODELIST:
 				break;
 			case RUNTIME: {
-                std::cout << "Vim Current StartupTime: " << VimConfig::Instance().getStartupTime() << std::endl;
+                std::cout << "Vim Current StartupTime in Miliseconds: " << VimConfig::Instance().getStartupTimeinMS() << std::endl;
+				std::cout << "Vim Current StartupTime in Seconds: " <<
+					VimConfig::Instance().getStartupTimeinSec() << std::endl;
 			    break;
 			}
 

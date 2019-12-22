@@ -1,21 +1,28 @@
 #pragma once
 #include <iostream>
-#include <boost/process.hpp>
-#include <boost/filesystem.hpp>
 #include <fstream>
 #include <sstream>
+#include <chrono>
 
-using namespace boost::process;
+#include <boost/filesystem.hpp>
+#include <boost/process.hpp>
+
+
 class VimConfig {
 
 public:
     VimConfig(VimConfig const&) = delete;
     VimConfig& operator= (VimConfig const&) = delete;
+
 	static VimConfig& Instance() {
 		static VimConfig vimconfig;
 		return vimconfig;
 	}
-	double getStartupTime();
+
+	double getStartupTimeinMS();
+
+	double getStartupTimeinSec();
+
 	void init();
 private:
     VimConfig() = default;
