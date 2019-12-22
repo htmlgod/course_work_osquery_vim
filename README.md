@@ -10,6 +10,7 @@
 * [Описание курсового проекта](https://github.com/htmlgod/course_work_osquery_vim#описание-курсового-проекта)
    * [Список задач](https://github.com/htmlgod/course_work_osquery_vim#список-задач)
 * [Процесс сборки](https://github.com/htmlgod/course_work_osquery_vim#процесс-сборки)
+* [Интеграция с osquery](https://github.com/htmlgod/course_work_osquery_vim#интеграция-с-osquery)
 * [Процесс запуска тестов](https://github.com/htmlgod/course_work_osquery_vim#процесс-запуска-тестов)
 * [Примеры команд](https://github.com/htmlgod/course_work_osquery_vim#примеры-команд)
 * [Архитектура проекта](https://github.com/htmlgod/course_work_osquery_vim#архитектура-проекта)
@@ -45,6 +46,29 @@ $ cmake -H. -B_build
 $ cmake --build _build
 ```
 ![vim-info-build](docs/demos/build.gif)
+## Интеграция с osquery
+
+Необходимо установить все зависимости
+```bash
+$ export OSQUERY_KEY=1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B
+$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $OSQUERY_KEY
+$ sudo add-apt-repository 'deb [arch=amd64] https://pkg.osquery.io/deb deb main'
+$ sudo apt-get update
+$ sudo apt-get install osquery
+### or
+$ brew update
+$ brew install osquery
+$ /usr/local/bin/osqueryi
+$ pip install osquery
+```
+Запуск расширения (перед запуском необходимо запустить и сделать экспорт данных из `vim-info`)
+```bash
+$ osqueryi --extension osquery_extension/pluginsExtension.py --allow_unsafe
+```
+```osquery
+Using a virtual database. Need help, type '.help'
+osquery> select * from vimplugins;
+```
 ## Процесс запуска тестов
 
 **WORK IN PROGRESS** 
