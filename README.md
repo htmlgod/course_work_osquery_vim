@@ -38,6 +38,9 @@
 
 ## Процесс сборки
 ```bash
+$ git clone https://github.com/htmlgod/course_work_osquery_vim 
+$ cd course_work_osquery_vim
+$ git submodule update --init
 $ cmake -H. -B_build
 $ cmake --build _build
 ```
