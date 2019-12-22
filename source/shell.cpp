@@ -23,6 +23,8 @@ __      _______ __  __      _____ _   _ ______ ____
 		                                                      
 	)" 
 	<< std::endl;
+    VimConfig::Instance().init();
+
 }
 
 void printMenu() {
@@ -32,7 +34,7 @@ void printMenu() {
 2. WIP
 3. WIP
 4. WIP
-5. WIP
+5. Get VIM Startup Time
 6. Get amount of stars of plugin on Github
 7. Get VimAwesome classification of plugin
 8. Get amount of open issues to closed issues on Github for plugin
@@ -60,8 +62,11 @@ int prompt() {
 				break;
 			case MODELIST:
 				break;
-			case RUNTIME:
-				break;
+			case RUNTIME: {
+                std::cout << "Vim Current StartupTime: " << VimConfig::Instance().getStartupTime() << std::endl;
+			    break;
+			}
+
 			case PLUGINSTARS: {
 				std::string name;
 				std::cout << "Enter plugin name: ";

@@ -1,11 +1,5 @@
 #pragma once
 
-#include <curl/curl.h>
-#include <string>
-#include <memory>
-#include <cstdint>
-#include <iostream>
-#include <utility>
 #include <vector>
 #include <webutils.h>
 

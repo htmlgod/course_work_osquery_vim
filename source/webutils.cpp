@@ -12,6 +12,7 @@ std::size_t callback(
 	return totalBytes;						    
 }
 }
+
 std::string httpQuery(const std::string& url) {
 	CURL* curl = curl_easy_init();
 

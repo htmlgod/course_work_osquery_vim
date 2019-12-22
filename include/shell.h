@@ -1,8 +1,5 @@
 #pragma once
-
-#include <iostream>
-#include <string>
-
+#include <singleton.h>
 #include <plugin.h>
 
 void start();
