@@ -22,6 +22,11 @@ std::string httpQuery(const std::string& url) {
 
 	curl_easy_setopt(curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
 
+    if(std::getenv("GITHUB_USERNAME") != nullptr and std::getenv("GITHUB_PASSWORD") != nullptr) {
+        curl_easy_setopt(curl, CURLOPT_USERNAME, std::getenv("GITHUB_USERNAME"));
+
+        curl_easy_setopt(curl, CURLOPT_PASSWORD, std::getenv("GITHUB_PASSWORD"));
+    }
 	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 10);
 
 	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
@@ -38,15 +43,18 @@ std::string httpQuery(const std::string& url) {
 	curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpCode);
 	curl_easy_cleanup(curl);
 	
-	if (httpCode != 300) {
+	if (httpCode == 200) {
 		std::string out = *httpData;
-		delete httpData;
+        delete httpData;
 		return out;
-	}
-	else {
-		std::cout << "Could not parse HTTP data as JSON" << std::endl;
-		//std::cout << "HTTP data was:\n" << *httpData << std::endl;
+	} else if(httpCode == 0) {
+	    std::cout << "Error: no internet connection!";
+
+	} else {
+		std::cout << "Could not parse HTTP data as JSON from url:"<<url << std::endl;
+		std::cout << "HTTP data was:\n" << *httpData << std::endl;
 		std::cout << "HTTP code: " << httpCode << std::endl;
-		return "empty";
+        delete httpData;
 	}
+    return "empty";
 }
