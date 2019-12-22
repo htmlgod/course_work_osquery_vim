@@ -10,7 +10,9 @@ HunterGate(
 )
 
 project(viminfo)
-
+set(other_flags "${other_flags} -frtti -fvisibility-inlines-hidden")
+set(other_flags "${other_flags} -fvisibility=hidden")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${other_flags}")
 hunter_add_package(CURL)
 find_package(CURL CONFIG REQUIRED)
 
