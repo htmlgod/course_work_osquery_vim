@@ -97,3 +97,7 @@ double Plugin::countForGroupOfPluginAmountOfStars(std::vector<Plugin>& group) {
     }
     return double(starsSum)/double(group.size());
 }
+
+std::string Plugin::getPluginName() {
+    return _pluginName;
+}
