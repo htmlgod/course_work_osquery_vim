@@ -32,7 +32,7 @@ void printMenu() {
 **************************************************************************
 1. Get list of plugins
 2. WIP
-3. WIP
+3. Get setting list
 4. WIP
 5. Get VIM Startup Time
 6. Get amount of stars of plugin on Github
@@ -52,19 +52,26 @@ int prompt() {
 		std::cin >> command;
 		switch (command) {
 			case PLUGINSLIST: {
+			    VimConfig::Instance().getPluginList();
 				break;
 			}
 				
-			case PLUGINSETTINGS:
-				break;
-			case SETTINGSLIST:
-				break;
+			case PLUGINSETTINGS: {
+
+			    break;
+			}
+
+			case SETTINGSLIST: {
+                VimConfig::Instance().getSettingList();
+                break;
+			}
+
 			case MODELIST:
 				break;
 			case RUNTIME: {
-                std::cout << "Vim Current StartupTime in Miliseconds: " << VimConfig::Instance().getStartupTimeinMS() << std::endl;
-				std::cout << "Vim Current StartupTime in Seconds: " <<
-					VimConfig::Instance().getStartupTimeinSec() << std::endl;
+//                std::cout << "Vim Current StartupTime in Miliseconds: " << VimConfig::Instance().getStartupTimeinMS() << std::endl;
+//				std::cout << "Vim Current StartupTime in Seconds: " <<
+//					VimConfig::Instance().getStartupTimeinSec() << std::endl;
 			    break;
 			}
 
