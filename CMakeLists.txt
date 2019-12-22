@@ -9,10 +9,6 @@ HunterGate(
 	SHA1 "ca19f3769e6c80cfdd19d8b12ba5102c27b074e0"
 )
 
-#HunterGate(
-#	URL "https://github.com/cpp-pm/hunter/archive/v0.23.218.tar.gz"
-#    SHA1 "9a3594a61227967fb92159339ba326701b287b19"	
-#)
 project(viminfo)
 
 hunter_add_package(CURL)
