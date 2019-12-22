@@ -7,6 +7,7 @@ void VimConfig::init() {
     detectVimConfigFile();
     parsePluginList();
     parseSettingList();
+    getStartupTime();
 }
 void VimConfig::getPluginList() {
     for(auto& plug : _plugins)
@@ -82,4 +83,28 @@ void VimConfig::parseSettingList() {
             }
         }
     }
+}
+
+void VimConfig::getStartupTime() {
+    std::string homePath = getenv("HOME");
+    boost::process::child c("vim --startuptime "+homePath + "/runtime.txt");
+    c.wait();
+    std::ifstream config(homePath + "/runtime.txt");
+    if (config.is_open()) {
+        while(!config.eof()) {
+            std::string lane;
+            std::getline(config, lane);
+            if (lane.find("VIM STARTED")!= std::string::npos) {
+                std::stringstream ss(lane);
+                ss >> _startupTime;
+            }
+        }
+    }
+}
+double VimConfig::getStartupTimeMS() {
+    return _startupTime;
+}
+
+double VimConfig::getStartupTimeS() {
+    return _startupTime/1000;
 }
