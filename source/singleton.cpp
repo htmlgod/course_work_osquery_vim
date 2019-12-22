@@ -1,42 +1,85 @@
 #include <singleton.h>
 namespace bp = boost::process;
+
 void VimConfig::init() {
-	std::cout << "VimConfig singleton started!" << std::endl;
-	std::string homePath = getenv("HOME");
-	bp::child c("vim --startuptime $HOME/vim.txt +q");
+    std::cout << "VimConfig singleton started!" << std::endl;
+    detectPluginManager();
+    detectVimConfigFile();
+    parsePluginList();
+    parseSettingList();
+}
+void VimConfig::getPluginList() {
+    for(auto& plug : _plugins)
+        std::cout << plug.getPluginName() << std::endl;
+}
 
-	c.wait();
-	std::ifstream vimLog(homePath + "/vim.txt");
-    if(vimLog.is_open()) {
-        vimLog.seekg(-2,std::ios_base::end);
-
-        bool keepLooping = true;
-        while(keepLooping) {
-            char ch;
-            vimLog.get(ch);                
-
-            if((int)vimLog.tellg() <= 1) {
-                vimLog.seekg(0);         
-                keepLooping = false;    
-            }
-            else if(ch == '\n') {      
-                keepLooping = false;  
-            }
-            else {                   
-                vimLog.seekg(-2,std::ios_base::cur);
+void VimConfig::parsePluginList() {
+    std::ifstream config(_configFilePath);
+    std::string keyWord;
+    if (_manager == "bundle") {
+        keyWord = "Plugin";
+    } else {
+        keyWord = "Plug";
+    }
+    if (config.is_open()) {
+        while(!config.eof()) {
+            std::string pluginName;
+            std::getline(config, pluginName);
+            if (pluginName.find(keyWord) != std::string::npos and pluginName[0] != '\"') {
+                std::size_t foundFirstQuote = pluginName.find("\'");
+                pluginName = pluginName.substr(foundFirstQuote + 1);
+                std::size_t foundNextQuote = pluginName.find("\'");
+                pluginName = pluginName.substr(0, foundNextQuote);
+                _plugins.emplace_back(pluginName);
             }
         }
-
-        std::string lastLine;
-        getline(vimLog,lastLine);                  
-        std::stringstream ss(lastLine);
-        ss >> _startupTime;
-        vimLog.close();
     }
 }
-double VimConfig::getStartupTimeinMS() {
-    return _startupTime;
+
+void VimConfig::detectPluginManager() {
+    std::string homePath = getenv("HOME");
+    std::string vimFilesDir;
+    if (boost::filesystem::exists(homePath + "/.vim")) {
+        vimFilesDir = homePath + "/.vim";
+    } else if (boost::filesystem::exists(homePath + "/.nvim")) {
+        vimFilesDir = homePath + "/.nvim";
+    }
+    if (boost::filesystem::exists(vimFilesDir + "/plugged")) {
+        _manager = "vim-plug";
+    } else if (boost::filesystem::exists(vimFilesDir + "/bundle")) {
+        _manager = "bundle";
+    }
 }
-double VimConfig::getStartupTimeinSec() {
-	return _startupTime/1000;
+
+void VimConfig::detectVimConfigFile() {
+    std::string homePath = getenv("HOME");
+    if (boost::filesystem::exists(homePath + "/.vimrc")) {
+        _configFilePath = homePath + "/.vimrc";
+    } else if (boost::filesystem::exists(homePath + "/.config/nvim/init.vim")) {
+        _configFilePath = homePath + "/.config/nvim/init.vim";
+    }
+}
+
+void VimConfig::getSettingList() {
+    for(int i = 0; i < _settings.size(); i++)
+        std::cout << _settings[i] << std::endl;
+}
+
+void VimConfig::parseSettingList() {
+    std::ifstream config(_configFilePath);
+    std::string keyWord = "set";
+    if (config.is_open()) {
+        while(!config.eof()) {
+            std::string setting;
+            std::getline(config, setting);
+            if (setting.find(keyWord) != std::string::npos and setting[0] != '\"') {
+                std::string junk;
+                std::string clearedSetting;
+                std::stringstream ss(setting);
+                ss >> junk;
+                ss >> clearedSetting;
+                _settings.push_back(clearedSetting);
+            }
+        }
+    }
 }
