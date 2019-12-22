@@ -20,10 +20,11 @@ public:
 	std::string getFormattedPluginName();
 
 	double countForGroupOfPluginAmountOfStars(std::vector<Plugin>& list);
-	
+
+	std::string getPluginName();
+
 	friend void printGroup(std::vector<Plugin>& group);
 private:
 	std::string _pluginName;
 };
-
 
