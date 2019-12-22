@@ -1,6 +1,11 @@
 #pragma once
 #include <iostream>
+#include <boost/process.hpp>
+#include <boost/filesystem.hpp>
+#include <fstream>
+#include <sstream>
 
+using namespace boost::process;
 class VimConfig {
 
 public:
@@ -10,12 +15,12 @@ public:
 		static VimConfig vimconfig;
 		return vimconfig;
 	}
-	int getStartupTime();
+	double getStartupTime();
 	void init();
 private:
     VimConfig() = default;
 	//std::vector<Plugin> 	 _plugins;
 	//std::vector<std::string> _settings;
 	//std::vector<std::string> _modes;
-	int						 _startupTime;
+	double						 _startupTime;
 };

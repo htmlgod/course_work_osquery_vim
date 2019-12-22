@@ -2,8 +2,8 @@
 
 void VimConfig::init() {
 	std::cout << "VimConfig singleton started!" << std::endl;
-	_startupTime = 0;
+	_startupTime = 0.0;
 }
-int VimConfig::getStartupTime() {
+double VimConfig::getStartupTime() {
     return _startupTime;
 }

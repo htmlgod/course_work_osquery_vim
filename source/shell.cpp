@@ -52,7 +52,6 @@ int prompt() {
 		std::cin >> command;
 		switch (command) {
 			case PLUGINSLIST: {
-
 				break;
 			}
 				
