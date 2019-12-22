@@ -1,3 +1,0 @@
-#!/bin/bash
-echo "All settings"
-grep "^set" ${HOME}/.vimrc
