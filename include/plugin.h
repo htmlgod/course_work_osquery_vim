@@ -13,10 +13,10 @@ public:
 	int getOpenedIssues();
 
 	int getClosedIssues();
+	
+	std::string getPluginName();
 
-    std::string getPluginName();
-
-    std::string getVimAwesomePluginClassification();
+	std::string getVimAwesomePluginClassification();
 
 	double getAmountOfOpenedIssuesToClosed();
 
@@ -30,11 +30,7 @@ public:
 
 	std::string getFormattedPluginName();
 
-
-
 	double countForGroupOfPluginAmountOfStars(std::vector<Plugin>& list);
-
-
 
 	friend void printGroup(std::vector<Plugin>& group);
 private:
