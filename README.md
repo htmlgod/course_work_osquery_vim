@@ -11,7 +11,6 @@
    * [Список задач](https://github.com/htmlgod/course_work_osquery_vim#список-задач)
 * [Процесс сборки](https://github.com/htmlgod/course_work_osquery_vim#процесс-сборки)
 * [Интеграция с osquery](https://github.com/htmlgod/course_work_osquery_vim#интеграция-с-osquery)
-* [Процесс запуска тестов](https://github.com/htmlgod/course_work_osquery_vim#процесс-запуска-тестов)
 * [Примеры команд](https://github.com/htmlgod/course_work_osquery_vim#примеры-команд)
 * [Архитектура проекта](https://github.com/htmlgod/course_work_osquery_vim#архитектура-проекта)
 * [Полезные ссылки](https://github.com/htmlgod/course_work_osquery_vim#полезные-ссылки)
@@ -69,9 +68,6 @@ $ osqueryi --extension osquery_extension/pluginsExtension.py --allow_unsafe
 Using a virtual database. Need help, type '.help'
 osquery> select * from vimplugins;
 ```
-## Процесс запуска тестов
-
-**WORK IN PROGRESS** 
 
 ## Примеры команд
 
@@ -118,14 +114,7 @@ osquery> select * from vimplugins;
 7. [x] Классифицировать плагин с помощью `vim-awesome`
 8. [x] Получить соотношение открытых `issues` к закрытым для плагина
 9. [x] Посчитать соотношение для группы плагинов количество звезд к количеству плагинов в группе
-10. [ ] Реализация установки
-11. [ ] Тесты
-12. [ ] Скринкасты для всех команд
-13. [x] Интеграция с `osquery`
-14. [x] Описать структуру всего проекта
-15. [ ] Провести рефакторинг кода
-16. [ ] Выполнить соблюдения одного стиля кода для всего проекта
-17. [ ] Добавить `Clang-code style`
-18. [x] Собрать необходимую информацию
-19. [x] Написать shell-скрипты
-20. [ ] Проверки на ввод/вывод/Unexpected Behavior
+10. [x] Интеграция с `osquery`
+11. [x] Описать структуру всего проекта
+12. [x] Собрать необходимую информацию
+13. [x] Написать shell-скрипты
