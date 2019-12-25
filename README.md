@@ -63,6 +63,8 @@ $ pip install osquery
 Запуск расширения (перед запуском необходимо запустить и сделать экспорт данных из `vim-info`)
 ```bash
 $ osqueryi --extension osquery_extension/pluginsExtension.py --allow_unsafe
+or
+$ python3 osquery_extension/plugins.Extension.py --socket <your_socket>
 ```
 ```osquery
 Using a virtual database. Need help, type '.help'
