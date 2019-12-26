@@ -1,15 +1,50 @@
 #include <singleton.h>
 #include <nlohmann/json.hpp>
+#include <sstream>
 
 namespace bp = boost::process;
 
+void VimConfig::findGitHubStarsPlugins() {
+    if(std::getenv("GITHUB_USERNAME") != nullptr) {
+        std::string username = std::getenv("GITHUB_USERNAME");
+        std::string paginationURL = "https://api.github.com/users/"+ username +"/starred?per_page=1";
+        std::string header = httpQuery(paginationURL,true);
+        std::stringstream ss(header);
+        std::string pages;
+        while(pages != "rel=\"next\",")
+            ss >> pages;
+        ss >> pages;
+        size_t pos = pages.find_last_of("page=");
+        pages = pages.substr(pos + 1);
+        size_t pos2 = pages.find(">;");
+        pages = pages.substr(0,pos2);
+        int userStarsNumber = stoi(pages);
+        std::cout << username << " starred list: " << std::endl;
+        for (int i = 1; i < userStarsNumber + 1; i++) {
+            paginationURL += "&page=" + std::to_string(i);
+            std::string query = httpQuery(paginationURL);
+            auto json = nlohmann::json::parse(query);
+            std::string name = json[0]["full_name"].get<std::string>();
+            Plugin plug(name);
+            std::cout << name << "is ";
+            if(plug.getVimAwesomePluginClassification() == "none") {
+                std::cout << "is not a plugin" << std::endl;
+            } else {
+                std::cout << "is a plugin with class: "<< plug.getVimAwesomePluginClassification() << std::endl;
+            }
+        }
+    } else {
+        std::cout << "Empty info about github user!" << std::endl;
+    }
+}
+
 void VimConfig::init() {
     std::cout << "VimConfig singleton started!" << std::endl;
-    detectPluginManager();
-    detectVimConfigFile();
-    parsePluginList();
-    parseSettingList();
-    getStartupTime();
+//    detectPluginManager();
+//    detectVimConfigFile();
+//    parsePluginList();
+//    parseSettingList();
+//    getStartupTime();
 }
 void VimConfig::getPluginList() {
     for(auto& plug : _plugins)

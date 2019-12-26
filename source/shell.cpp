@@ -10,6 +10,7 @@
 #define PLUGINSISSUES 8
 #define GROUPSTARS 9
 #define EXPORTJSON 10
+#define FINDFROMSTARS 11
 #define EXIT 0
 
 void start(){
@@ -41,6 +42,7 @@ void printMenu() {
 8. Get amount of open issues to closed issues on Github for plugin
 9. Count amount for group of plugins stars to amount of plugins
 10. Export All data to json
+11. Find Plugins in Github User Star's
 0. Exit from vim-info
 **************************************************************************
 	)"
@@ -132,6 +134,9 @@ int prompt() {
 			    VimConfig::Instance().exportJSONData();
                 std::cout << "Exported to ~/.vimPlugins.json!" << std::endl;
 			    break;
+			}
+			case FINDFROMSTARS: {
+				VimConfig::Instance().findGitHubStarsPlugins();
 			}
 			case EXIT:
 				break;

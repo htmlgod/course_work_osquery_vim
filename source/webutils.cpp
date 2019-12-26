@@ -13,7 +13,7 @@ std::size_t callback(
 }
 }
 
-std::string httpQuery(const std::string& url) {
+std::string httpQuery(const std::string& url, bool onlyHeader) {
 	CURL* curl = curl_easy_init();
 
 	curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
@@ -22,23 +22,28 @@ std::string httpQuery(const std::string& url) {
 
 	curl_easy_setopt(curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
 
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, 10);
+
+    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
     if(std::getenv("GITHUB_USERNAME") != nullptr and std::getenv("GITHUB_PASSWORD") != nullptr) {
         curl_easy_setopt(curl, CURLOPT_USERNAME, std::getenv("GITHUB_USERNAME"));
 
         curl_easy_setopt(curl, CURLOPT_PASSWORD, std::getenv("GITHUB_PASSWORD"));
     }
-	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 10);
 
-	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+    long httpCode(0);
+    auto* httpData = new std::string();
+    if (onlyHeader) {
+        curl_easy_setopt(curl, CURLOPT_NOBODY, 1L);
+        curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, callback);
 
-	long httpCode(0);
+        curl_easy_setopt(curl, CURLOPT_HEADERDATA, httpData);
+    } else {
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, callback);
 
-	auto* httpData = new std::string();
-
-	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, callback);
-
-	curl_easy_setopt(curl, CURLOPT_WRITEDATA, httpData);
-
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, httpData);
+    }
 	curl_easy_perform(curl);
 	curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpCode);
 	curl_easy_cleanup(curl);

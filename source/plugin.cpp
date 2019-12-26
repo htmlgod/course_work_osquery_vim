@@ -76,7 +76,7 @@ void Plugin::parseVimAwesomePluginClassification() {
     std::string url = vimAwesomeAPIQuery + formattedPluginName;
     std::string jsonHTTP = httpQuery(url);
     std::string githubURL = githubURLBase + _pluginName;
-    std::string category = "null";
+    _category = "none";
     if (jsonHTTP != "empty") {
         auto json = nlohmann::json::parse(jsonHTTP);
         for (auto& x : json["plugins"]) {
@@ -85,9 +85,8 @@ void Plugin::parseVimAwesomePluginClassification() {
                 break;
             }
         }
-    } else {
-        _category = "none";
     }
+
 }
 double Plugin::getAmountOfOpenedIssuesToClosed() {
 	return double(getOpenedIssues())/double(getClosedIssues());
@@ -115,7 +114,7 @@ std::string Plugin::getPluginName() {
 Plugin::Plugin(std::string name) {
     _pluginName = name;
     parseVimAwesomePluginClassification();
-    parseClosedIssues();
-    parseOpenedIssues();
-    parseStarsCount();
+//    parseClosedIssues();
+//    parseOpenedIssues();
+//    parseStarsCount();
 }

@@ -7,6 +7,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/process.hpp>
 #include <plugin.h>
+#include <webutils.h>
 
 class VimConfig {
 
@@ -34,6 +35,8 @@ public:
     double getStartupTimeS();
 
     void exportJSONData();
+
+	void findGitHubStarsPlugins();
 
     void init();
 private:

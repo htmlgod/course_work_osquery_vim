@@ -8,4 +8,4 @@ namespace API {
 	static std::string GITHUB_API_ENTRY = "https://api.github.com/";
 }
 
-std::string httpQuery(const std::string& url);
+std::string httpQuery(const std::string& url, bool onlyHeader = false);
