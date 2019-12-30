@@ -43,6 +43,9 @@
 $ python3/python
 $ pip3/pip
 $ pip3/pip install osquery
+# Export your Github username and password/token
+$ export GITHUB_USERNAME=<username>
+$ export GITHUB_PASSWORD=***************
 ```
 
 ## Процесс сборки
