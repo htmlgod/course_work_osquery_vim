@@ -1,9 +1,30 @@
 #pragma once
-#include <singleton.h>
+
+#include <boost/program_options.hpp>
 #include <plugin.h>
+#include <singleton.h>
 
-void start();
+namespace Shell {
+    // Entry point
+    void start(int argc, const char *argv[]);
 
-void printMenu();
+    // GUI functions
+    void printMenu();
+    void prompt();
 
-int prompt();
+    // Version
+    void printVersion();
+
+    // Shell commands
+    namespace Command {
+        void pluginsList();
+        void settingsList();
+        void vimRuntime();
+        void pluginStars();
+        void pluginClass();
+        void pluginIssues();
+        void groupStars();
+        void exportToJSON();
+        void findStarredPlugins();
+    }
+}

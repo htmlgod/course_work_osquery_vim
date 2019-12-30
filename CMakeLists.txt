@@ -42,4 +42,5 @@ target_link_libraries(
 		Boost::system
 		CURL::libcurl
 		nlohmann_json::nlohmann_json
+		Boost::program_options
 )
