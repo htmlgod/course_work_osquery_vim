@@ -1,4 +1,4 @@
-![vim-info-screenshot](docs/scr1.png)
+![vim-info-screenshot](docs/screenshots/logo.png)
 
 # :floppy_disk: vim-info
 `vim-info` - утилита, позволяющая узнать информацию о конфигурации вашего
@@ -9,6 +9,7 @@
 ## Содержание
 * [Описание курсового проекта](https://github.com/htmlgod/course_work_osquery_vim#описание-курсового-проекта)
    * [Список задач](https://github.com/htmlgod/course_work_osquery_vim#список-задач)
+* [Зависимости](https://github.com/htmlgod/course_work_osquery_vim#зависимости)
 * [Процесс сборки](https://github.com/htmlgod/course_work_osquery_vim#процесс-сборки)
 * [Интеграция с osquery](https://github.com/htmlgod/course_work_osquery_vim#интеграция-с-osquery)
 * [Примеры команд](https://github.com/htmlgod/course_work_osquery_vim#примеры-команд)
@@ -36,6 +37,14 @@
 8. Получить соотношение открытых `issues` к закрытым для плагина
 9. Посчитать соотношение для группы плагинов количество звезд к количеству плагинов в группе
 
+## Зависимости
+```bash
+#requirements
+$ python3/python
+$ pip3/pip
+$ pip3/pip install osquery
+```
+
 ## Процесс сборки
 ```bash
 $ git clone https://github.com/htmlgod/course_work_osquery_vim 
@@ -43,54 +52,84 @@ $ cd course_work_osquery_vim
 $ git submodule update --init
 $ cmake -H. -B_build
 $ cmake --build _build
+$ ./start.sh # Установка расширения
 ```
-![vim-info-build](docs/demos/build.gif)
+![vim-info-build](docs/gifs/build.gif)
 ## Интеграция с osquery
 
-Необходимо установить все зависимости
+Запуск расширения
 ```bash
-$ export OSQUERY_KEY=1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B
-$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $OSQUERY_KEY
-$ sudo add-apt-repository 'deb [arch=amd64] https://pkg.osquery.io/deb deb main'
-$ sudo apt-get update
-$ sudo apt-get install osquery
-### or
-$ brew update
-$ brew install osquery
-$ /usr/local/bin/osqueryi
-$ pip install osquery
-```
-Запуск расширения (перед запуском необходимо запустить и сделать экспорт данных из `vim-info`)
-```bash
-$ osqueryi --extension osquery_extension/pluginsExtension.py --allow_unsafe
-or
-$ python3 osquery_extension/plugins.Extension.py --socket <your_socket>
+$ viminfo --json_export # Парсим данные и сохраняем в json формате
+# В другом окне/терминале
+$ osqueryi --nodisable_extensions
+# В изначальном терминале/окне
+$ viminfo --start_extension # Запускаем расширение
 ```
 ```osquery
 Using a virtual database. Need help, type '.help'
 osquery> select * from vimplugins;
+osquery> select * from viminfodata;
+osquery> select * from vimruntime;
 ```
+![settinglist](docs/gifs/osquery.gif)
+Доступные таблицы:
+
+1. Таблица плагинов
+
+![plugtable](docs/screenshots/plugtable.png)
+
+2. Таблица времени запуска VIM
+
+![timetable](docs/screenshots/runtimetable.png)
+
+3. Таблица общих данных (включая необходимые для работы программы)
+
+![datatable](docs/screenshots/infotable.png)
 
 ## Примеры команд
 
+### Опции запуска
+
+```bash
+$ viminfo --help
+vim-info options:
+  -h [ --help ]             Help screen
+  -e [ --start_extension ]  Start osquery extension without GUI
+  -j [ --json_export ]      Parse and export information into json files 
+                            without GUI
+  -v [ --version ]          print version
+  -c [ --clear ]            Clear all data
+```
+
 1. Получить список плагинов
+
+![pluginlist](docs/gifs/cmd1.gif)
+
 2. Получить список настроек для плагинов
 3. Получить список настроек
+
+![settinglist](docs/gifs/cmd2.gif)
+
 4. Получить список отображений для режимов
 5. Получить время запуска
+
+![runtime](docs/gifs/cmd3.gif)
+
 6. Получить список звезд для плагина на сервисе `GitHub`
 
-![vim-info-stars](docs/demos/stars.gif)
+![pluginstars](docs/gifs/cmd4.gif)
 
 7. Классифицировать плагин с помощью `vim-awesome`
+
+![pluginclass](docs/gifs/cmd5.gif)
+
 8. Получить соотношение открытых `issues` к закрытым для плагина
 
-![vim-info-issues](docs/demos/issues.gif)
+![pluginissues](docs/gifs/cmd6.gif)
 
 9. Посчитать соотношение для группы плагинов количество звезд к количеству плагинов в группе
 
-
-![vim-info-group_stars](docs/demos/group_stars.gif)
+![pluginsgroup](docs/gifs/cmd7.gif)
 
 ## Архитектура проекта
 
@@ -104,6 +143,9 @@ osquery> select * from vimplugins;
 * [nlohmann/json](https://github.com/nlohmann/json)
 * [vimdoc](http://vimdoc.sourceforge.net/htmldoc/starting.html)
 * [vim wiki](https://vim.fandom.com/wiki/Displaying_the_current_Vim_environment)
+* [Boost docs](https://www.boost.org/doc/libs/)
+* [Osquery Docs](https://osquery.readthedocs.io/en/latest/)
+* [osquery-python](https://github.com/osquery/osquery-python)
 
 ## TODO-лист
 
